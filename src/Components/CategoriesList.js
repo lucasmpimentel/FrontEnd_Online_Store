@@ -1,0 +1,14 @@
+import React, { Component } from 'react'
+
+class CategoriesList extends Component {
+  render() {
+    const { categorieName } = this.props;
+    return (
+        <div>
+          <button type="button" data-testid="category">{categorieName}</button>
+        </div>
+    )
+}
+}
+
+export default CategoriesList;
