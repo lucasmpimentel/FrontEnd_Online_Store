@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class CategoriesList extends Component {
+export default class CategoriesList extends Component {
   render() {
     const { categorieName } = this.props;
     return (
@@ -14,5 +15,3 @@ class CategoriesList extends Component {
 CategoriesList.propTypes = {
   categorieName: PropTypes.string.isRequired,
 };
-
-export default CategoriesList;
