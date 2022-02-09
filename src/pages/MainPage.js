@@ -57,6 +57,7 @@ export default class MainPage extends Component {
           <section>
             { listCategories.map((item) => (
               <CategoriesList
+                handleClick
                 key={ item.id }
                 categorieName={ item.name }
               />))}
