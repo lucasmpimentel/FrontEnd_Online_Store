@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCategories } from '../services/api'
+import { getCategories } from '../services/api';
 import CategoriesList from '../Components/CategoriesList';
 
 class MainPage extends Component {
@@ -9,10 +9,8 @@ class MainPage extends Component {
 
   async componentDidMount() {
     const list = await getCategories();
-    this.setState({listCategories: list});
-    console.log(list);
+    this.setState({ listCategories: list });
   }
-  
 
   render() {
     const { listCategories } = this.state;
@@ -27,8 +25,14 @@ class MainPage extends Component {
           </p>
         </div>
         <section>
-          {listCategories.map((item) => <CategoriesList key={item.id} categorieName={item.name} />)
+          {
+            listCategories.map((item) => (
+              <CategoriesList
+                key={ item.id }
+                categorieName={ item.name }
+              />))
           }
+          ;
         </section>
       </div>
     );
