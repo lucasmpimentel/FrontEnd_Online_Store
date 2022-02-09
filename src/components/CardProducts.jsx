@@ -9,15 +9,18 @@ export default class CardProducts extends Component {
       <div data-testid="product">
         <p>{ title }</p>
         <img src={ thumbnail } alt={ title } />
-        <p>R$ { price } </p>
+        <p>
+          R$
+          { price }
+        </p>
       </div>
     );
   }
 }
 
-CardProducts.propTypes={
+CardProducts.propTypes = {
   product: PropTypes.objectOf(oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ])).isRequired
-}
+  ])).isRequired,
+};
