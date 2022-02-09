@@ -17,6 +17,7 @@ export default class MainPage extends Component {
 
   async componentDidMount() {
     const list = await getCategories();
+    console.log(list);
     this.setState({ listCategories: list });
   }
 
@@ -25,9 +26,10 @@ export default class MainPage extends Component {
     this.setState({ [name]: value });
   }
 
-  handleClick = () => {
+  handleClick = (idCategory) => {
+    console.log(idCategory);
     const { search } = this.state;
-    const categoryId = '';
+    const categoryId = idCategory;
     this.setState({ loading: true }, async () => {
       const getProducts = await getProductsFromCategoryAndQuery(categoryId, search);
       this.setState({ listProducts: getProducts, loading: false, loaded: true });
@@ -39,26 +41,29 @@ export default class MainPage extends Component {
     return (
       <div>
         <Header />
-        <input
-          data-testid="query-input"
-          name="search"
-          type="text"
-          value={ search }
-          onChange={ this.handleInputChange }
-        />
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ this.handleClick }
-        >
-          Pesquisar
-        </button>
+        <div className="input-search">
+          <input
+            data-testid="query-input"
+            name="search"
+            type="text"
+            value={ search }
+            onChange={ this.handleInputChange }
+          />
+          <button
+            data-testid="query-button"
+            type="button"
+            onClick={ this.handleClick }
+          >
+            Pesquisar
+          </button>
+        </div>
         <div className="categories-products">
           <section>
             { listCategories.map((item) => (
               <CategoriesList
-                handleClick
+                handleClick={ this.handleClick }
                 key={ item.id }
+                idCategory={ item.id }
                 categorieName={ item.name }
               />))}
           </section>
