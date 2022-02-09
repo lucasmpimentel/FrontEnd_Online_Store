@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import Header from '../components/Header';
 import Loading from '../components/Loading'
+import CategoriesList from '../Components/CategoriesList';
 
 class MainPage extends Component {
   state = {
     loading: false,
     loaded: false,
     search: '',
+    listCategories: [],
   }
 
   handleInputChange = ({ target }) => {
@@ -16,8 +18,14 @@ class MainPage extends Component {
     // getProductsFromCategoryAndQuery(categoryId, query)
   }
 
+  async componentDidMount() {
+    const list = await getCategories();
+    this.setState({listCategories: list});
+    console.log(list);
+  }
+
   render() {
-    const {loading, loaded, search} = this.state;
+    const {loading, loaded, search, listCategories} = this.state;
     return (
       <div>
         <Header />
@@ -31,6 +39,10 @@ class MainPage extends Component {
             Digite algum termo de pesquisa ou escolha uma categoria.
           </p>
         </div>
+        <section>
+          {listCategories.map((item) => <CategoriesList key={item.id} categorieName={item.name} />)
+          }
+        </section>
       </div>
     );
   }
