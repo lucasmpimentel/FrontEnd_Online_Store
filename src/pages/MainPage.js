@@ -14,15 +14,12 @@ export default class MainPage extends Component {
     listCategories: [],
     listProducts: [],
     waiting: true,
+    categoryId: '',
   }
 
   async componentDidMount() {
     const list = await getCategories();
-    // console.log(list);
     this.setState({ listCategories: list });
-    // if (!localStorage.getItem('addToCart')) {
-    //   localStorage.setItem('addToCart', JSON.stringify([]));
-    // }
   }
 
   handleInputChange = ({ target }) => {
@@ -31,12 +28,19 @@ export default class MainPage extends Component {
   }
 
   handleClick = (idCategory) => {
-    // console.log(idCategory);
-    const { search } = this.state;
-    const categoryId = idCategory;
+    this.setState({ categoryId: idCategory, loading: true, waiting: false }, async () => {
+      const getProducts = await getProductsFromCategoryAndQuery(idCategory, '');
+      this.setState({ listProducts: getProducts, loading: false, loaded: true, search: '',
+      });
+    });
+  }
+
+  searchClick = () => {
+    const { categoryId, search } = this.state;
     this.setState({ loading: true, waiting: false }, async () => {
       const getProducts = await getProductsFromCategoryAndQuery(categoryId, search);
-      this.setState({ listProducts: getProducts, loading: false, loaded: true });
+      this.setState({ listProducts: getProducts, loading: false, loaded: true,
+      });
     });
   }
 
@@ -56,7 +60,7 @@ export default class MainPage extends Component {
           <button
             data-testid="query-button"
             type="button"
-            onClick={ this.handleClick }
+            onClick={ this.searchClick }
           >
             Pesquisar
           </button>

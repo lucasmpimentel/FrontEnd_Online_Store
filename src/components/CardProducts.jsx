@@ -13,7 +13,6 @@ export default class CardProducts extends Component {
 
   // Auxilia a montagem da página de detalhe do item
   saveToLocalStorage = () => {
-    console.log('clique: CardProducts => saveToLocalStorage');
     const {
       product,
     } = this.props;
