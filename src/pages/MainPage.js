@@ -72,8 +72,7 @@ export default class MainPage extends Component {
           <section className="products-container">
             { loading && <Loading /> }
             { loaded && listProducts.results.map((product) => (
-              <CardProducts key={ product.id } product={ product } />
-            ))}
+              <CardProducts key={ product.id } product={ product } />))}
             { waiting && (
               <p data-testid="home-initial-message">
                 Digite algum termo de pesquisa ou escolha uma categoria.
