@@ -1,0 +1,25 @@
+.card-product-container {
+  align-items: center;
+  border: solid 1px black;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  margin: 0 5px 10px;
+  max-width: 250px;
+  text-align: center;
+}
+
+.img-card-product {
+  height: 250px;
+  width: 249px;
+}
+
+.title-card-product {
+  align-self: center;
+  border-bottom: solid 1px black;
+  display: flex;
+  height: 75px;
+  justify-self: center;
+  overflow: hidden;
+}
