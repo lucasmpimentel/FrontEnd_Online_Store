@@ -13,6 +13,7 @@ export default class MainPage extends Component {
     search: '',
     listCategories: [],
     listProducts: [],
+    waiting: true,
   }
 
   async componentDidMount() {
@@ -30,14 +31,14 @@ export default class MainPage extends Component {
     console.log(idCategory);
     const { search } = this.state;
     const categoryId = idCategory;
-    this.setState({ loading: true }, async () => {
+    this.setState({ loading: true, waiting: false }, async () => {
       const getProducts = await getProductsFromCategoryAndQuery(categoryId, search);
       this.setState({ listProducts: getProducts, loading: false, loaded: true });
     });
   }
 
   render() {
-    const { loading, loaded, search, listCategories, listProducts } = this.state;
+    const { loading, loaded, waiting, search, listCategories, listProducts } = this.state;
     return (
       <div>
         <Header />
@@ -57,8 +58,9 @@ export default class MainPage extends Component {
             Pesquisar
           </button>
         </div>
+        <hr />
         <div className="categories-products">
-          <section>
+          <section className="categories-container">
             { listCategories.map((item) => (
               <CategoriesList
                 handleClick={ this.handleClick }
@@ -67,15 +69,16 @@ export default class MainPage extends Component {
                 categorieName={ item.name }
               />))}
           </section>
-          <div>
+          <section className="products-container">
             { loading && <Loading /> }
             { loaded && listProducts.results.map((product) => (
               <CardProducts key={ product.id } product={ product } />
             ))}
-            <p data-testid="home-initial-message">
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
-          </div>
+            { waiting && (
+              <p data-testid="home-initial-message">
+                Digite algum termo de pesquisa ou escolha uma categoria.
+              </p>) }
+          </section>
         </div>
       </div>
     );
