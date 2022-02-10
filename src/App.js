@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom/cjs/react-router-dom.min';
-import MainPage from './pages/MainPage';
 import Cart from './pages/Cart';
+import MainPage from './pages/MainPage';
+import ProductDetails from './pages/ProductDetails';
 
 class App extends Component {
   render() {
@@ -9,6 +10,7 @@ class App extends Component {
       <BrowserRouter>
         <Route exact path="/" component={ MainPage } />
         <Route path="/cart" component={ Cart } />
+        <Route path="/productDetail/:id" component={ ProductDetails } />
       </BrowserRouter>
     );
   }
