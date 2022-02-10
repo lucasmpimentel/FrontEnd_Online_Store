@@ -58,7 +58,7 @@ export default class MainPage extends Component {
             Pesquisar
           </button>
         </div>
-          <hr />
+        <hr />
         <div className="categories-products">
           <section className="categories-container">
             { listCategories.map((item) => (
