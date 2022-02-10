@@ -12,6 +12,8 @@ class Cart extends Component {
     if (cart) this.setState({ cart });
   }
 
+  cartUpdate = () => this.setState({ cart: getCart() });
+
   render() {
     const { cart } = this.state;
     return (
@@ -24,13 +26,18 @@ class Cart extends Component {
           if (includesId) acc[product.id] = [product, (acc[product.id][1] + 1)];
           else acc[product.id] = [product, 1];
           return acc;
-        }, {})).map(([product, amount]) => (
-          <CartProductCard
-            key={ product.id }
-            product={ product }
-            amount={ amount }
-          />
-        ))}
+        }, {})).map(([product, amount]) => {
+          let quantity = amount;
+          if (product.available_quantity < amount) quantity = product.available_quantity;
+          return (
+            <CartProductCard
+              cartUpdate={ this.cartUpdate }
+              key={ product.id }
+              product={ product }
+              amount={ quantity }
+            />
+          );
+        })}
       </div>
     );
   }
