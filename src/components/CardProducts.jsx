@@ -1,8 +1,8 @@
 import PropTypes, { oneOfType } from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/CardProducts.css';
 import { addCart } from '../services/addCart';
+import '../styles/CardProducts.css';
 
 export default class CardProducts extends Component {
   constructor() {
@@ -11,19 +11,21 @@ export default class CardProducts extends Component {
     this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
   }
 
+  // Auxilia a montagem da página de detalhe do item
   saveToLocalStorage = () => {
     const {
-      product: { title, price, thumbnail, id },
+      product,
     } = this.props;
-    localStorage.setItem('product', JSON.stringify({ title, price, thumbnail, id }));
+    localStorage.setItem(
+      'product',
+      JSON.stringify(product),
+    );
   };
 
   render() {
     const { product } = this.props;
     const { title, price, thumbnail, id } = product;
     return (
-      // Tentando passar o resultado de pesquisa que gerou o Card para a próxima página (ProducDetails)
-      // https://stackoverflow.com/questions/45598854/passing-values-through-react-router-v4-link
       <div
         data-testid="product"
         className="card-product-container"
@@ -31,9 +33,7 @@ export default class CardProducts extends Component {
       >
         <Link
           data-testid="product-detail-link"
-          to={ {
-            pathname: `/productDetail/${id}`,
-          } }
+          to={ `/productDetail/${id}` }
           onClick={ this.saveToLocalStorage }
         >
           <h4 className="title-card-product">{title}</h4>
