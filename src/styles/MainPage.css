@@ -1,8 +1,26 @@
 .categories-products {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
 }
 
-/* .input-search {
+.input-search {
+  display: flex;
+  justify-content: center;
+}
 
-} */
+.categories-container {
+  border: solid 1px red;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10px;
+  margin-right: 30px;
+  max-width: 1050px;
+  min-width: 250px;
+}
