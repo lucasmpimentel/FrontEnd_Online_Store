@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
+import { addCart } from '../services/addCart';
 
 class ProductDetails extends Component {
   constructor() {
@@ -8,56 +10,30 @@ class ProductDetails extends Component {
       title: '',
       thumbnail: '',
       price: 0,
-      id: '',
     };
 
     this.retrieveItem = this.retrieveItem.bind(this);
-    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
     this.retrieveItem();
   }
 
-  // addToCard: {
-  //   MLB1: { price, thumb, title, qtd, },
-  //   MLB2: { price, thumb, title, qtd, },
-  //  };
-
-  addToCart = () => {
-    if (!localStorage.getItem('addToCart')) {
-      localStorage.setItem('addToCart', JSON.stringify([]));
-    }
-
-    // Objeto vazio
-    const previousStorage = JSON.parse(localStorage.getItem('addToCart'));
-
-    // Objeto
-    const { title, thumbnail, price, id } = this.state;
-    const newItem = { [id]: { title, thumbnail, price } };
-
-    previousStorage.push(newItem);
-    const newStorage = previousStorage;
-
-    localStorage.setItem(
-      'addToCart', JSON.stringify(newStorage),
-    );
-  };
-
   retrieveItem = () => {
-    const item = JSON.parse(localStorage.getItem('product'));
+    const { title, thumbnail, price } = JSON.parse(localStorage.getItem('product'));
     this.setState({
-      title: item.title,
-      thumbnail: item.thumbnail,
-      price: item.price,
-      id: item.id,
+      title,
+      thumbnail,
+      price,
     });
   };
 
   render() {
     const { title, thumbnail, price } = this.state;
+    const itemDetail = JSON.parse(localStorage.getItem('product'));
     return (
       <div>
+        <Header />
         <h3>Detalhes de produto</h3>
         <h4 data-testid="product-detail-name">{title}</h4>
         <img src={ thumbnail } alt={ title } />
@@ -69,7 +45,7 @@ class ProductDetails extends Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ this.addToCart }
+          onClick={ () => addCart(itemDetail) }
         >
           Adicionar ao carrinho
         </button>

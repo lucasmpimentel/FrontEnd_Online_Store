@@ -11,13 +11,15 @@ export default class CardProducts extends Component {
     this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
   }
 
+  // Auxilia a montagem da página de detalhe do item
   saveToLocalStorage = () => {
+    console.log('clique: CardProducts => saveToLocalStorage');
     const {
-      product: { title, price, thumbnail, id },
+      product,
     } = this.props;
     localStorage.setItem(
       'product',
-      JSON.stringify({ title, price, thumbnail, id }),
+      JSON.stringify(product),
     );
   };
 
@@ -25,31 +27,29 @@ export default class CardProducts extends Component {
     const { product } = this.props;
     const { title, price, thumbnail, id } = product;
     return (
-      // Tentando passar o resultado de pesquisa que gerou o Card para a próxima página (ProducDetails)
-      // https://stackoverflow.com/questions/45598854/passing-values-through-react-router-v4-link
-      <Link
-        data-testid="product-detail-link"
-        to={ `/productDetail/${id}` }
-        onClick={ this.saveToLocalStorage }
+      <div
+        data-testid="product"
+        className="card-product-container"
+        props={ (title, price, thumbnail, id) }
       >
-        <div
-          data-testid="product"
-          className="card-product-container"
-          props={ (title, price, thumbnail, id) }
+        <Link
+          data-testid="product-detail-link"
+          to={ `/productDetail/${id}` }
+          onClick={ this.saveToLocalStorage }
         >
           <h4 className="title-card-product">{title}</h4>
           <img className="img-card-product" src={ thumbnail } alt={ title } />
           <p>{`R$ ${price}`}</p>
-          <hr />
-          <button
-            data-testid="product-add-to-cart"
-            type="button"
-            onClick={ () => addCart(product) }
-          >
-            Adicionar ao carrinho
-          </button>
-        </div>
-      </Link>
+        </Link>
+        <hr />
+        <button
+          data-testid="product-add-to-cart"
+          type="button"
+          onClick={ () => addCart(product) }
+        >
+          Adicionar ao carrinho
+        </button>
+      </div>
     );
   }
 }
