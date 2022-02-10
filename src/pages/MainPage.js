@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import CardProducts from '../components/CardProducts';
+import CategoriesList from '../components/CategoriesList';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import CategoriesList from '../components/CategoriesList';
-import CardProducts from '../components/CardProducts';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import '../styles/MainPage.css';
 
 export default class MainPage extends Component {
@@ -18,7 +18,7 @@ export default class MainPage extends Component {
 
   async componentDidMount() {
     const list = await getCategories();
-    console.log(list);
+    // console.log(list);
     this.setState({ listCategories: list });
   }
 
@@ -28,7 +28,7 @@ export default class MainPage extends Component {
   }
 
   handleClick = (idCategory) => {
-    console.log(idCategory);
+    // console.log(idCategory);
     const { search } = this.state;
     const categoryId = idCategory;
     this.setState({ loading: true, waiting: false }, async () => {
