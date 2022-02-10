@@ -26,9 +26,7 @@ export default class CardProducts extends Component {
       // https://stackoverflow.com/questions/45598854/passing-values-through-react-router-v4-link
       <Link
         data-testid="product-detail-link"
-        to={ {
-          pathname: `/productDetail/${id}`,
-        } }
+        to={ `/productDetail/${id}` }
         onClick={ this.saveToLocalStorage }
       >
         <div

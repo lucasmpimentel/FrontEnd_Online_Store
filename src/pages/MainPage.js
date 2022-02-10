@@ -20,6 +20,9 @@ export default class MainPage extends Component {
     const list = await getCategories();
     // console.log(list);
     this.setState({ listCategories: list });
+    if (!localStorage.getItem('addToCart')) {
+      localStorage.setItem('addToCart', JSON.stringify([]));
+    }
   }
 
   handleInputChange = ({ target }) => {
