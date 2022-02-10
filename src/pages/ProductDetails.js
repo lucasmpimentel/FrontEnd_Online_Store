@@ -1,19 +1,37 @@
-import PropTypes, { oneOfType } from 'prop-types';
 import React, { Component } from 'react';
 
 class ProductDetails extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      title: '',
+      thumbnail: '',
+      price: 0,
+    };
+
+    this.retrieveItem = this.retrieveItem.bind(this);
+  }
+
+  componentDidMount() {
+    this.retrieveItem();
+  }
+
+  retrieveItem = () => {
+    const item = JSON.parse(localStorage.getItem('product'));
+    this.setState({
+      title: item.title,
+      thumbnail: item.thumbnail,
+      price: item.price,
+    });
+  };
+
   render() {
-    const {
-      match: {
-        params: { title, thumbnail, price },
-      },
-    } = this.props;
-    // Retornando undefined
-    console.log('ProductDetails - props:', title, thumbnail, price);
+    const { title, thumbnail, price } = this.state;
     return (
       <div>
         <h3>Detalhes de produto</h3>
-        <h4>{title}</h4>
+        <h4 data-testid="product-detail-name">{title}</h4>
         <img src={ thumbnail } alt={ title } />
         <p>
           R$
@@ -23,12 +41,5 @@ class ProductDetails extends Component {
     );
   }
 }
-
-ProductDetails.propTypes = {
-  match: PropTypes.objectOf({
-    params: PropTypes.objectOf(oneOfType([PropTypes.string, PropTypes.number]))
-      .isRequired,
-  }).isRequired,
-};
 
 export default ProductDetails;
