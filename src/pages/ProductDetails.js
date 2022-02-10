@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
+import { addCart } from '../services/addCart';
 
 class ProductDetails extends Component {
   constructor() {
@@ -18,18 +20,20 @@ class ProductDetails extends Component {
   }
 
   retrieveItem = () => {
-    const item = JSON.parse(localStorage.getItem('product'));
+    const { title, thumbnail, price } = JSON.parse(localStorage.getItem('product'));
     this.setState({
-      title: item.title,
-      thumbnail: item.thumbnail,
-      price: item.price,
+      title,
+      thumbnail,
+      price,
     });
   };
 
   render() {
     const { title, thumbnail, price } = this.state;
+    const itemDetail = JSON.parse(localStorage.getItem('product'));
     return (
       <div>
+        <Header />
         <h3>Detalhes de produto</h3>
         <h4 data-testid="product-detail-name">{title}</h4>
         <img src={ thumbnail } alt={ title } />
@@ -37,6 +41,14 @@ class ProductDetails extends Component {
           R$
           {price}
         </p>
+
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => addCart(itemDetail) }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }

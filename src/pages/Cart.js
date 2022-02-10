@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { getCart } from '../services/addCart';
 import CartProductCard from '../components/CartProductCard';
+import { getCart } from '../services/addCart';
 
 class Cart extends Component {
   state = {
     cart: [],
-  }
+  };
 
   componentDidMount() {
     const cart = getCart();
@@ -18,8 +18,11 @@ class Cart extends Component {
     const { cart } = this.state;
     return (
       <div>
-        {cart.length === 0
-        && <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>}
+        {cart.length === 0 && (
+          <p data-testid="shopping-cart-empty-message">
+            Seu carrinho está vazio
+          </p>
+        )}
         {cart.length !== 0
         && Object.values(cart.reduce((acc, product) => {
           const includesId = Object.keys(acc).some((id) => id === product.id);

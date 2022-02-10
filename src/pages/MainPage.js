@@ -19,7 +19,6 @@ export default class MainPage extends Component {
 
   async componentDidMount() {
     const list = await getCategories();
-    // console.log(list);
     this.setState({ listCategories: list });
   }
 
