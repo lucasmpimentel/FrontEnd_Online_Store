@@ -8,14 +8,41 @@ class ProductDetails extends Component {
       title: '',
       thumbnail: '',
       price: 0,
+      id: '',
     };
 
     this.retrieveItem = this.retrieveItem.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
     this.retrieveItem();
   }
+
+  // addToCard: {
+  //   MLB1: { price, thumb, title, qtd, },
+  //   MLB2: { price, thumb, title, qtd, },
+  //  };
+
+  addToCart = () => {
+    if (!localStorage.getItem('addToCart')) {
+      localStorage.setItem('addToCart', JSON.stringify([]));
+    }
+
+    // Objeto vazio
+    const previousStorage = JSON.parse(localStorage.getItem('addToCart'));
+
+    // Objeto
+    const { title, thumbnail, price, id } = this.state;
+    const newItem = { [id]: { title, thumbnail, price } };
+
+    previousStorage.push(newItem);
+    const newStorage = previousStorage;
+
+    localStorage.setItem(
+      'addToCart', JSON.stringify(newStorage),
+    );
+  };
 
   retrieveItem = () => {
     const item = JSON.parse(localStorage.getItem('product'));
@@ -23,6 +50,7 @@ class ProductDetails extends Component {
       title: item.title,
       thumbnail: item.thumbnail,
       price: item.price,
+      id: item.id,
     });
   };
 
@@ -37,6 +65,14 @@ class ProductDetails extends Component {
           R$
           {price}
         </p>
+
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.addToCart }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }
