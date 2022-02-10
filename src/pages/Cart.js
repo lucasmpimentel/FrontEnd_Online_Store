@@ -28,13 +28,18 @@ class Cart extends Component {
           return acc;
         }, {})).map(([product, amount]) => {
           let quantity = amount;
-          if (product.available_quantity < amount) quantity = product.available_quantity;
+          let isDisable = false;
+          if (product.available_quantity <= amount) {
+            quantity = product.available_quantity;
+            isDisable = true;
+          }
           return (
             <CartProductCard
               cartUpdate={ this.cartUpdate }
               key={ product.id }
               product={ product }
               amount={ quantity }
+              isDisable={ isDisable }
             />
           );
         })}

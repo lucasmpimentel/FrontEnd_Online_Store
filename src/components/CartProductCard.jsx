@@ -4,7 +4,7 @@ import { removeAll, addCart, subtract } from '../services/addCart';
 
 export default class CartProductCard extends Component {
   render() {
-    const { product, amount, cartUpdate } = this.props;
+    const { product, amount, cartUpdate, isDisabled } = this.props;
     const { price, title, thumbnail } = product;
     return (
       <div>
@@ -35,6 +35,7 @@ export default class CartProductCard extends Component {
           <button
             data-testid="product-increase-quantity"
             type="button"
+            disabled={ isDisabled }
             onClick={ () => {
               addCart(product);
               cartUpdate();
@@ -52,6 +53,7 @@ export default class CartProductCard extends Component {
 CartProductCard.propTypes = {
   cartUpdate: PropTypes.func.isRequired,
   amount: PropTypes.number.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
   product: PropTypes.objectOf(oneOfType([
     PropTypes.string,
     PropTypes.number,
