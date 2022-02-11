@@ -21,3 +21,18 @@ export const subtract = ({ id }) => {
   storage.splice(indexRemove, 1);
   localStorage.setItem('cartItems', JSON.stringify(storage));
 };
+
+export const addAvaliation = (avaliationObject) => {
+  let prev = JSON.parse(localStorage.getItem('Avaliation'));
+  if (prev) {
+    prev = prev.filter((item) => (
+      item.email !== avaliationObject.email || item.nome !== avaliationObject.nome));
+  }
+  if (prev) {
+    return (
+      localStorage.setItem('Avaliation', JSON.stringify([...prev, avaliationObject])));
+  }
+  localStorage.setItem('Avaliation', JSON.stringify([avaliationObject]));
+};
+
+export const getAvaliation = () => JSON.parse(localStorage.getItem('Avaliation'));
