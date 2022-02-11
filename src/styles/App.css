@@ -12,6 +12,10 @@
   pointer-events: none;
 }
 
+.background {
+  background-color: #ededed;
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {

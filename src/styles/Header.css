@@ -1,0 +1,37 @@
+.header-container {
+  align-items: center;
+  background-color: #f5cb5c;
+  color: #e8eddf;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 10px 0 10px 20px;
+}
+
+.container-btn {
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.25);
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  text-decoration: none;
+  width: 50px;
+}
+
+.container-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.cart-amount {
+  text-decoration: none;
+}
+
+.title-store {
+  color: #242423;
+  font-size: 22pt;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}

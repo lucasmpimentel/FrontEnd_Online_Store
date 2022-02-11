@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { shape, string } from 'prop-types';
 import CardProducts from '../components/CardProducts';
 import CategoriesList from '../components/CategoriesList';
 import Header from '../components/Header';
@@ -19,6 +20,11 @@ export default class MainPage extends Component {
   }
 
   async componentDidMount() {
+    const { match: { params } } = this.props;
+    if (params.product) {
+      this.setState({ search: params.product });
+      this.searchClick();
+    }
     const list = await getCategories();
     this.setState({ listCategories: list });
   }
@@ -71,7 +77,6 @@ export default class MainPage extends Component {
             Pesquisar
           </button>
         </div>
-        <hr />
         <div className="categories-products">
           <section className="categories-container">
             { listCategories.map((item) => (
