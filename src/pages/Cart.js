@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import CartProductCard from '../components/CartProductCard';
 import { getCart } from '../services/addCart';
 
@@ -46,6 +47,9 @@ class Cart extends Component {
             />
           );
         })}
+        <Link to="/checkout">
+          <button type="button" data-testid="checkout-products">Checkout</button>
+        </Link>
       </div>
     );
   }
