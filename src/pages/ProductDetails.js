@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
-import { addCart, addAvaliation, getAvaliation } from '../services/addCart';
+import { addAvaliation, addCart, getAvaliation } from '../services/addCart';
 import { getCategories } from '../services/api';
 
 class ProductDetails extends Component {
@@ -12,6 +12,7 @@ class ProductDetails extends Component {
       title: '',
       thumbnail: '',
       price: 0,
+      headerFunc: '',
     };
 
     this.retrieveItem = this.retrieveItem.bind(this);
@@ -70,24 +71,30 @@ class ProductDetails extends Component {
     this.testingItens();
   }
 
+  getHeaderState = (func) => {
+    this.setState({ headerFunc: func });
+  }
+
   render() {
-    const { title, thumbnail, price, email } = this.state;
+    const { title, thumbnail, price, email, headerFunc } = this.state;
     const itemDetail = JSON.parse(localStorage.getItem('product'));
     return (
       <>
         <div>
-          <Header />
+          <Header getHeaderState={ this.getHeaderState } />
           <h3>Detalhes de produto</h3>
           <h4 data-testid="product-detail-name">{title}</h4>
           <img src={ thumbnail } alt={ title } />
           <p>
-            R$
-            {price}
+            {`R$ ${price}`}
           </p>
           <button
             type="button"
             data-testid="product-detail-add-to-cart"
-            onClick={ () => addCart(itemDetail) }
+            onClick={ () => {
+              addCart(itemDetail);
+              headerFunc();
+            } }
           >
             Adicionar ao carrinho
           </button>
