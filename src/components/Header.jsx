@@ -2,10 +2,12 @@ import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCart } from '../services/addCart';
+import '../styles/Header.css';
 
 export default class Header extends Component {
   state={
     amount: 0,
+    value: '',
   }
 
   componentDidMount() {
@@ -15,25 +17,53 @@ export default class Header extends Component {
     getHeaderState(this.setAmount);
   }
 
- setAmount = () => {
-   const getAmount = getCart() === null ? 0 : getCart().length;
-   this.setState({ amount: getAmount });
- }
+  handleInputChange = ({ target: { value } }) => this.setState({ value });
 
- render() {
-   const { amount } = this.state;
-   return (
-     <div>
-       <h1>Página Inicial</h1>
-       <Link to="/cart" data-testid="shopping-cart-button">
-         <div hidden>{ 'Carrinho de compras ' }</div>
-         🛒
+  setAmount = () => {
+    const getAmount = getCart() === null ? 0 : getCart().length;
+    this.setState({ amount: getAmount });
+  }
 
-         <span data-testid="shopping-cart-size">{amount}</span>
-       </Link>
-     </div>
-   );
- }
+  render() {
+    const { amount, value } = this.state;
+    return (
+      <div className="header-container">
+        <Link to="/" clasName="link-clear">
+          <h1 className="title-store">Lojinha do seu Zé!</h1>
+        </Link>
+        <div>
+          <input
+            data-testid="query-input"
+            name="search"
+            type="text"
+            value={ value }
+            onChange={ this.handleInputChange }
+          />
+          <Link
+            to={ {
+              pathname: '/',
+              state: { search: value, find: true },
+            } }
+          >
+            <button
+              data-testid="query-button"
+              type="button"
+            >
+              Pesquisar
+            </button>
+          </Link>
+        </div>
+        <div className="container-btn">
+          <Link clasName="link-clear" to="/cart" data-testid="shopping-cart-button">
+            <div className="cart-amount" data-testid="shopping-cart-size">{amount}</div>
+            <div hidden>{ 'Carrinho de compras ' }</div>
+            🛒
+
+          </Link>
+        </div>
+      </div>
+    );
+  }
 }
 
 Header.propTypes = {
