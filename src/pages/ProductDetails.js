@@ -141,6 +141,7 @@ class ProductDetails extends Component {
                     type="radio"
                     name={ `${index1}${index2}` }
                     checked={ (this.pastAvaliations[index1].starsNumber[index2]) }
+                    disabled="true"
                   />
                 ))}
                 <hr />
