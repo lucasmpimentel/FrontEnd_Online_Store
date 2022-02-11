@@ -18,13 +18,13 @@ export default class MainPage extends Component {
     headerFunc: '',
   }
 
-  getHeaderState = (func) => {
-    this.setState({ headerFunc: func });
-  }
-
   async componentDidMount() {
     const list = await getCategories();
     this.setState({ listCategories: list });
+  }
+
+  getHeaderState = (func) => {
+    this.setState({ headerFunc: func });
   }
 
   handleInputChange = ({ target }) => {
@@ -50,7 +50,8 @@ export default class MainPage extends Component {
   }
 
   render() {
-    const { loading, loaded, waiting, search, listCategories, listProducts } = this.state;
+    const { loading, loaded, waiting, search, listCategories, listProducts, headerFunc,
+    } = this.state;
     return (
       <div>
         <Header getHeaderState={ this.getHeaderState } />
@@ -84,7 +85,11 @@ export default class MainPage extends Component {
           <section className="products-container">
             { loading && <Loading /> }
             { loaded && listProducts.results.map((product) => (
-              <CardProducts key={ product.id } product={ product } />))}
+              <CardProducts
+                key={ product.id }
+                product={ product }
+                headerFunc={ headerFunc }
+              />))}
             { waiting && (
               <p data-testid="home-initial-message">
                 Digite algum termo de pesquisa ou escolha uma categoria.
