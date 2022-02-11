@@ -15,6 +15,11 @@ export default class MainPage extends Component {
     listProducts: [],
     waiting: true,
     categoryId: '',
+    headerFunc: '',
+  }
+
+  getHeaderState = (func) => {
+    this.setState({ headerFunc: func });
   }
 
   async componentDidMount() {
@@ -48,7 +53,7 @@ export default class MainPage extends Component {
     const { loading, loaded, waiting, search, listCategories, listProducts } = this.state;
     return (
       <div>
-        <Header />
+        <Header getHeaderState={ this.getHeaderState } />
         <div className="input-search">
           <input
             data-testid="query-input"
