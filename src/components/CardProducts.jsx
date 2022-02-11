@@ -12,9 +12,9 @@ export default class CardProducts extends Component {
   };
 
   render() {
-    const { product, headerFunc  } = this.props;
+    const { product, headerFunc } = this.props;
     const { title, price, thumbnail, id, shipping } = product;
-    const { free_shipping } = shipping
+    const { free_shipping: freeShipping } = shipping;
     return (
       <div
         data-testid="product"
@@ -30,7 +30,7 @@ export default class CardProducts extends Component {
             <h4 className="title-card-product">{title}</h4>
             <img className="img-card-product" src={ thumbnail } alt={ title } />
             <p>{`R$ ${price}`}</p>
-            {free_shipping ? <p data-testid="free-shipping">Frete grátis!</p> : null}
+            {freeShipping && <p data-testid="free-shipping">Frete grátis!</p>}
           </Link>
         </div>
         <hr />
