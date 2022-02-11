@@ -5,25 +5,14 @@ import { addCart } from '../services/addCart';
 import '../styles/CardProducts.css';
 
 export default class CardProducts extends Component {
-  constructor() {
-    super();
-
-    this.saveToLocalStorage = this.saveToLocalStorage.bind(this);
-  }
-
   // Auxilia a montagem da página de detalhe do item
   saveToLocalStorage = () => {
-    const {
-      product,
-    } = this.props;
-    localStorage.setItem(
-      'product',
-      JSON.stringify(product),
-    );
+    const { product } = this.props;
+    localStorage.setItem('product', JSON.stringify(product));
   };
 
   render() {
-    const { product } = this.props;
+    const { product, headerFunc  } = this.props;
     const { title, price, thumbnail, id, shipping } = product;
     const { free_shipping } = shipping
     return (
@@ -48,7 +37,10 @@ export default class CardProducts extends Component {
         <button
           data-testid="product-add-to-cart"
           type="button"
-          onClick={ () => addCart(product) }
+          onClick={ () => {
+            addCart(product);
+            headerFunc();
+          } }
         >
           Adicionar ao carrinho
         </button>
@@ -60,4 +52,5 @@ export default class CardProducts extends Component {
 CardProducts.propTypes = {
   product: PropTypes.objectOf(oneOfType([PropTypes.string, PropTypes.number]))
     .isRequired,
+  headerFunc: PropTypes.func.isRequired,
 };
