@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { shape, string } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import CardProducts from '../components/CardProducts';
 import CategoriesList from '../components/CategoriesList';
 import Header from '../components/Header';
@@ -11,7 +11,6 @@ export default class MainPage extends Component {
   state = {
     loading: false,
     loaded: false,
-    search: '',
     listCategories: [],
     listProducts: [],
     waiting: true,
@@ -20,17 +19,14 @@ export default class MainPage extends Component {
   }
 
   async componentDidMount() {
-    const { match: { params } } = this.props;
-    if (params.product) {
-      this.setState({ search: params.product });
-      this.searchClick();
-    }
+    const { click } = this.props;
+    if (click) this.searchClick();
     const list = await getCategories();
     this.setState({ listCategories: list });
   }
 
-  getHeaderState = (func) => {
-    this.setState({ headerFunc: func });
+  getHeaderState = (funct) => {
+    this.setState({ headerFunc: funct });
   }
 
   handleInputChange = ({ target }) => {
@@ -41,42 +37,33 @@ export default class MainPage extends Component {
   handleClick = (idCategory) => {
     this.setState({ categoryId: idCategory, loading: true, waiting: false }, async () => {
       const getProducts = await getProductsFromCategoryAndQuery(idCategory, '');
-      this.setState({ listProducts: getProducts, loading: false, loaded: true, search: '',
-      });
-    });
-  }
-
-  searchClick = () => {
-    const { categoryId, search } = this.state;
-    this.setState({ loading: true, waiting: false }, async () => {
-      const getProducts = await getProductsFromCategoryAndQuery(categoryId, search);
       this.setState({ listProducts: getProducts, loading: false, loaded: true,
       });
     });
   }
 
+  searchClick = () => {
+    console.log('aqui');
+    const { value, endSearch } = this.props;
+    const { categoryId } = this.state;
+    this.setState({ loading: true, waiting: false }, async () => {
+      const getProducts = await getProductsFromCategoryAndQuery(categoryId, value);
+      this.setState({ listProducts: getProducts, loading: false, loaded: true,
+      });
+      endSearch();
+    });
+  }
+
   render() {
-    const { loading, loaded, waiting, search, listCategories, listProducts, headerFunc,
+    const { loading, loaded, waiting, listCategories, listProducts, headerFunc,
     } = this.state;
     return (
       <div>
-        <Header getHeaderState={ this.getHeaderState } />
-        <div className="input-search">
-          <input
-            data-testid="query-input"
-            name="search"
-            type="text"
-            value={ search }
-            onChange={ this.handleInputChange }
-          />
-          <button
-            data-testid="query-button"
-            type="button"
-            onClick={ this.searchClick }
-          >
-            Pesquisar
-          </button>
-        </div>
+        <Header
+          getHeaderState={ this.getHeaderState }
+          { ...this.props }
+          onClick={ this.searchClick }
+        />
         <div className="categories-products">
           <section className="categories-container">
             { listCategories.map((item) => (
@@ -105,3 +92,9 @@ export default class MainPage extends Component {
     );
   }
 }
+
+MainPage.propTypes = {
+  click: bool.isRequired,
+  value: string.isRequired,
+  endSearch: func.isRequired,
+};
