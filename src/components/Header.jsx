@@ -7,7 +7,7 @@ import '../styles/Header.css';
 export default class Header extends Component {
   state={
     amount: 0,
-    value: '',
+    // value: '',
   }
 
   componentDidMount() {
@@ -17,7 +17,7 @@ export default class Header extends Component {
     getHeaderState(this.setAmount);
   }
 
-  handleInputChange = ({ target: { value } }) => this.setState({ value });
+  // handleInputChange = ({ target: { value } }) => this.setState({ value });
 
   setAmount = () => {
     const getAmount = getCart() === null ? 0 : getCart().length;
@@ -25,7 +25,8 @@ export default class Header extends Component {
   }
 
   render() {
-    const { amount, value } = this.state;
+    const { amount } = this.state;
+    const { value, onChange, onClick } = this.props;
     return (
       <div className="header-container">
         <Link to="/" clasName="link-clear">
@@ -37,14 +38,13 @@ export default class Header extends Component {
             name="search"
             type="text"
             value={ value }
-            onChange={ this.handleInputChange }
+            onChange={ onChange }
           />
-          <Link
-            to={ `/search/${value}` }
-          >
+          <Link to="/">
             <button
               data-testid="query-button"
               type="button"
+              onClick={ onClick }
             >
               Pesquisar
             </button>
@@ -65,4 +65,7 @@ export default class Header extends Component {
 
 Header.propTypes = {
   getHeaderState: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
