@@ -40,10 +40,7 @@ export default class Header extends Component {
             onChange={ this.handleInputChange }
           />
           <Link
-            to={ {
-              pathname: '/',
-              state: { search: value, find: true },
-            } }
+            to={ `/search/${value}` }
           >
             <button
               data-testid="query-button"

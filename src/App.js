@@ -12,6 +12,7 @@ class App extends Component {
       <div className="background">
         <BrowserRouter>
           <Route exact path="/" component={ MainPage } />
+          <Route path="/search/:product" component={ MainPage } />
           <Route path="/cart" component={ Cart } />
           <Route path="/checkout" component={ Checkout } />
           <Route path="/productDetail/:id" component={ ProductDetails } />
