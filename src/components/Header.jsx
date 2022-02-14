@@ -1,13 +1,13 @@
 import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { BsFillCartFill } from 'react-icons/bs';
 import { getCart } from '../services/addCart';
 import '../styles/Header.css';
 
 export default class Header extends Component {
   state={
     amount: 0,
-    // value: '',
   }
 
   componentDidMount() {
@@ -17,18 +17,17 @@ export default class Header extends Component {
     getHeaderState(this.setAmount);
   }
 
-  // handleInputChange = ({ target: { value } }) => this.setState({ value });
-
   setAmount = () => {
     const getAmount = getCart() === null ? 0 : getCart().length;
     this.setState({ amount: getAmount });
   }
 
   render() {
+    const LIMITE_DO_CARRINHO = 99;
     const { amount } = this.state;
     const { value, onChange, onClick } = this.props;
     return (
-      <div className="header-container">
+      <header className="header-container">
         <Link to="/" clasName="link-clear">
           <h1 className="title-store">Lojinha do seu Zé!</h1>
         </Link>
@@ -50,15 +49,18 @@ export default class Header extends Component {
             </button>
           </Link>
         </div>
-        <div className="container-btn">
-          <Link clasName="link-clear" to="/cart" data-testid="shopping-cart-button">
-            <div className="cart-amount" data-testid="shopping-cart-size">{amount}</div>
-            <div hidden>{ 'Carrinho de compras ' }</div>
-            🛒
-
-          </Link>
-        </div>
-      </div>
+        <Link clasName="link-clear" to="/cart" data-testid="shopping-cart-button">
+          <div className="container-btn">
+            <div
+              className="cart-amount"
+              data-testid="shopping-cart-size"
+            >
+              {amount <= LIMITE_DO_CARRINHO ? amount : '99+'}
+            </div>
+            <BsFillCartFill className="cart-icon" />
+          </div>
+        </Link>
+      </header>
     );
   }
 }

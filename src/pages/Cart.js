@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartProductCard from '../components/CartProductCard';
 import { getCart } from '../services/addCart';
+import Header from '../components/Header';
 
 class Cart extends Component {
   state = {
     cart: [],
+    headerFunc: '',
   };
 
   componentDidMount() {
@@ -13,12 +15,17 @@ class Cart extends Component {
     if (cart) this.setState({ cart });
   }
 
+  getHeaderState = (func) => {
+    this.setState({ headerFunc: func });
+  }
+
   cartUpdate = () => this.setState({ cart: getCart() });
 
   render() {
-    const { cart } = this.state;
+    const { cart, headerFunc } = this.state;
     return (
       <div>
+        <Header getHeaderState={ this.getHeaderState } { ...this.props } />
         {cart.length === 0 && (
           <p data-testid="shopping-cart-empty-message">
             Seu carrinho está vazio
@@ -44,6 +51,7 @@ class Cart extends Component {
               product={ product }
               amount={ quantity }
               isDisable={ isDisable }
+              headerFunc={ headerFunc }
             />
           );
         })}

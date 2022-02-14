@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage';
 import ProductDetails from './pages/ProductDetails';
 import Checkout from './pages/Checkout';
 import './styles/App.css';
+import Footer from './components/Footer';
 
 class App extends Component {
   state={
@@ -32,7 +33,15 @@ class App extends Component {
               endSearch={ this.endSearch }
             />) }
           />
-          <Route path="/cart" component={ Cart } />
+          <Route
+            path="/cart"
+            render={ () => (<Cart
+              { ...this.state }
+              onChange={ this.onChange }
+              onClick={ this.onClick }
+              endSearch={ this.endSearch }
+            />) }
+          />
           <Route path="/checkout" component={ Checkout } />
           <Route
             path="/productDetail/:id"
@@ -43,6 +52,7 @@ class App extends Component {
               endSearch={ this.endSearch }
             />) }
           />
+          <Footer />
         </BrowserRouter>
       </div>
     );
