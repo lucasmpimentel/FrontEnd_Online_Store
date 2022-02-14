@@ -124,7 +124,8 @@ class ProductDetails extends Component {
               name="mensagem"
               placeholder="Mensagem (opcional)"
               onChange={ this.onChangeHandler }
-              style={ { height: '100px', width: '300px' } }
+              style={ { height: '100px',
+    width: '300px' } }
             />
             <button
               onClick={ this.buttonCick }

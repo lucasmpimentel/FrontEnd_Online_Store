@@ -1,0 +1,24 @@
+.product-card-container {
+  border: solid 1px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 400px;
+  width: 250px;
+}
+
+.cart-title {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.cart-image {
+  max-height: 250px;
+  max-width: 250px;
+}
+
+.erase-product {
+  fill: #333533;
+  height: 50px;
+  width: 50px;
+}
