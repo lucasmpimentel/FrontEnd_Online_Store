@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes, { oneOfType } from 'prop-types';
-import { BsCartXFill } from 'react-icons/bs';
+import { BsCartXFill, BsCartDashFill, BsCartPlusFill } from 'react-icons/bs';
 import { removeAll, addCart, subtract } from '../services/addCart';
 import '../styles/CartProductCard.css';
 
@@ -17,19 +17,22 @@ export default class CartProductCard extends Component {
           >
             { title }
           </h3>
+        </div>
+        <div className="image-container">
           <img className="=cart-image" src={ thumbnail } alt={ title } />
         </div>
-        <BsCartXFill
-          className="erase-product"
-          type="button"
-          onClick={ () => {
-            removeAll(product);
-            cartUpdate();
-            headerFunc();
-          } }
-        />
         <div className="amount-btns">
-          <button
+          <BsCartXFill
+            className="erase-product"
+            type="button"
+            onClick={ () => {
+              removeAll(product);
+              cartUpdate();
+              headerFunc();
+            } }
+          />
+          <BsCartDashFill
+            className="less-products"
             data-testid="product-decrease-quantity"
             type="button"
             onClick={ () => {
@@ -37,11 +40,12 @@ export default class CartProductCard extends Component {
               cartUpdate();
               headerFunc();
             } }
-          >
-            -
-          </button>
-          <p data-testid="shopping-cart-product-quantity">{`Quantidade: ${amount}`}</p>
-          <button
+          />
+          <div className="amount-container">
+            <span data-testid="shopping-cart-product-quantity">{ amount }</span>
+          </div>
+          <BsCartPlusFill
+            className="more-products"
             data-testid="product-increase-quantity"
             type="button"
             disabled={ isDisabled }
@@ -50,11 +54,11 @@ export default class CartProductCard extends Component {
               cartUpdate();
               headerFunc();
             } }
-          >
-            +
-          </button>
+          />
         </div>
-        <p>{`R$ ${price}`}</p>
+        <div className="price-container">
+          <h3>{`R$ ${price}`}</h3>
+        </div>
       </div>
     );
   }
@@ -68,5 +72,8 @@ CartProductCard.propTypes = {
   product: PropTypes.objectOf(oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.object,
+    PropTypes.bool,
+    PropTypes.array,
   ])).isRequired,
 };
