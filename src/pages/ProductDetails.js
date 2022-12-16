@@ -81,7 +81,7 @@ class ProductDetails extends Component {
     return (
       <>
         <div>
-          <Header getHeaderState={ this.getHeaderState } />
+          <Header getHeaderState={ this.getHeaderState } { ...this.props } />
           <h3>Detalhes de produto</h3>
           <h4 data-testid="product-detail-name">{title}</h4>
           <img src={ thumbnail } alt={ title } />
@@ -124,7 +124,8 @@ class ProductDetails extends Component {
               name="mensagem"
               placeholder="Mensagem (opcional)"
               onChange={ this.onChangeHandler }
-              style={ { height: '100px', width: '300px' } }
+              style={ { height: '100px',
+    width: '300px' } }
             />
             <button
               onClick={ this.buttonCick }

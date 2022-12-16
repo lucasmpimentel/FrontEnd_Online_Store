@@ -4,22 +4,59 @@ import Cart from './pages/Cart';
 import MainPage from './pages/MainPage';
 import ProductDetails from './pages/ProductDetails';
 import Checkout from './pages/Checkout';
+import './styles/App.css';
+import Footer from './components/Footer';
 
 class App extends Component {
+  state={
+    value: '',
+    click: false,
+  }
+
+  endSearch = () => this.setState({ click: false, value: '' });
+
+  onClick = () => this.setState({ click: true });
+
+  onChange = ({ target: { value } }) => this.setState({ value });
+
   render() {
     return (
-      <BrowserRouter>
-        <Route exact path="/" component={ MainPage } />
-        <Route path="/cart" component={ Cart } />
-        <Route path="/checkout" component={ Checkout } />
-        <Route path="/productDetail/:id" component={ ProductDetails } />
-      </BrowserRouter>
+      <div className="background">
+        <BrowserRouter>
+          <Route
+            exact
+            path="/"
+            render={ () => (<MainPage
+              { ...this.state }
+              onChange={ this.onChange }
+              onClick={ this.onClick }
+              endSearch={ this.endSearch }
+            />) }
+          />
+          <Route
+            path="/cart"
+            render={ () => (<Cart
+              { ...this.state }
+              onChange={ this.onChange }
+              onClick={ this.onClick }
+              endSearch={ this.endSearch }
+            />) }
+          />
+          <Route path="/checkout" component={ Checkout } />
+          <Route
+            path="/productDetail/:id"
+            render={ () => (<ProductDetails
+              { ...this.state }
+              onChange={ this.onChange }
+              onClick={ this.onClick }
+              endSearch={ this.endSearch }
+            />) }
+          />
+          <Footer />
+        </BrowserRouter>
+      </div>
     );
   }
 }
-
-App.propTypes = {
-
-};
 
 export default App;

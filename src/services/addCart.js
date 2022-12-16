@@ -1,9 +1,15 @@
 export const addCart = (product) => {
   const prev = JSON.parse(localStorage.getItem('cartItems'));
-  if (prev) return localStorage.setItem('cartItems', JSON.stringify([...prev, product]));
+  if (prev) {
+    const { length } = prev.filter(({ id }) => id === product.id);
+    if (product.available_quantity <= length) {
+      return localStorage.setItem('cartItems', JSON.stringify(prev));
+    }
+    return localStorage.setItem('cartItems', JSON.stringify([...prev, product]));
+  }
   localStorage.setItem('cartItems', JSON.stringify([product]));
 };
-
+// available_quantity
 export const getCart = () => JSON.parse(localStorage.getItem('cartItems'));
 
 export const removeAll = ({ id }) => {

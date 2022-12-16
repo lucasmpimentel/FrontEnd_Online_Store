@@ -1,7 +1,9 @@
 import { PropTypes } from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { BsFillCartFill } from 'react-icons/bs';
 import { getCart } from '../services/addCart';
+import '../styles/Header.css';
 
 export default class Header extends Component {
   state={
@@ -15,27 +17,57 @@ export default class Header extends Component {
     getHeaderState(this.setAmount);
   }
 
- setAmount = () => {
-   const getAmount = getCart() === null ? 0 : getCart().length;
-   this.setState({ amount: getAmount });
- }
+  setAmount = () => {
+    const getAmount = getCart() === null ? 0 : getCart().length;
+    this.setState({ amount: getAmount });
+  }
 
- render() {
-   const { amount } = this.state;
-   return (
-     <div>
-       <h1>Página Inicial</h1>
-       <Link to="/cart" data-testid="shopping-cart-button">
-         <div hidden>{ 'Carrinho de compras ' }</div>
-         🛒
-
-         <span data-testid="shopping-cart-size">{amount}</span>
-       </Link>
-     </div>
-   );
- }
+  render() {
+    const LIMITE_DO_CARRINHO = 99;
+    const { amount } = this.state;
+    const { value, onChange, onClick } = this.props;
+    return (
+      <header className="header-container">
+        <Link to="/" className="link-clear">
+          <h1 className="title-store">Lojinha do seu Zé!</h1>
+        </Link>
+        <div>
+          <input
+            data-testid="query-input"
+            name="search"
+            type="text"
+            value={ value }
+            onChange={ onChange }
+          />
+          <Link to="/">
+            <button
+              data-testid="query-button"
+              type="button"
+              onClick={ onClick }
+            >
+              Pesquisar
+            </button>
+          </Link>
+        </div>
+        <Link className="link-clear" to="/cart" data-testid="shopping-cart-button">
+          <div className="container-btn">
+            <div
+              className="cart-amount"
+              data-testid="shopping-cart-size"
+            >
+              {amount <= LIMITE_DO_CARRINHO ? amount : '99+'}
+            </div>
+            <BsFillCartFill className="cart-icon" />
+          </div>
+        </Link>
+      </header>
+    );
+  }
 }
 
 Header.propTypes = {
   getHeaderState: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };

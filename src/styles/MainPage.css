@@ -4,10 +4,10 @@
   justify-content: space-between;
 }
 
-.input-search {
+/* .input-search {
   display: flex;
   justify-content: center;
-}
+} */
 
 .categories-container {
   border: solid 1px red;
