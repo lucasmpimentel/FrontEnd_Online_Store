@@ -28,7 +28,7 @@ export default class Header extends Component {
     const { value, onChange, onClick } = this.props;
     return (
       <header className="header-container">
-        <Link to="/" clasName="link-clear">
+        <Link to="/" className="link-clear">
           <h1 className="title-store">Lojinha do seu Zé!</h1>
         </Link>
         <div>
@@ -49,7 +49,7 @@ export default class Header extends Component {
             </button>
           </Link>
         </div>
-        <Link clasName="link-clear" to="/cart" data-testid="shopping-cart-button">
+        <Link className="link-clear" to="/cart" data-testid="shopping-cart-button">
           <div className="container-btn">
             <div
               className="cart-amount"
